@@ -1,5 +1,4 @@
 
-
 def answer(file_path: str) -> int:
     to_digit_forward = {
         'one': '1',
@@ -28,31 +27,31 @@ def answer(file_path: str) -> int:
     with open(file_path) as file:
         content = file.readlines()
     numbers_forward = []
-    for line in content:
-        current_digits = []
-        buffer = ''
-        for elem in line:
-            buffer += elem
-            for k, v in to_digit_forward.items():
-                if k in buffer:
-                    current_digits.append(v)
-                    buffer = ''
-            if elem.isdigit():
-                current_digits.append(elem)
-        numbers_forward.append(current_digits)
-
     numbers_backwards = []
     for line in content:
-        current_digits = []
-        buffer = []
-        for elem in line[::-1]:
-            buffer.append(elem)
-            for k, v in to_digit_backwards.items():
-                if k in ''.join(buffer):
-                    current_digits.append(v)
-                    buffer = []
+        current_digits_f = []
+        buffer_f = ''
+        for elem in line:
+            buffer_f += elem
+            for k, v in to_digit_forward.items():
+                if k in buffer_f:
+                    current_digits_f.append(v)
+                    break
             if elem.isdigit():
-                current_digits.append(elem)
-        numbers_backwards.append(current_digits)
+                current_digits_f.append(elem)
+                break
+        current_digits_b = []
+        buffer_b = []
+        for elem in line[::-1]:
+            buffer_b.append(elem)
+            for k, v in to_digit_backwards.items():
+                if k in ''.join(buffer_b):
+                    current_digits_b.append(v)
+                    break
+            if elem.isdigit():
+                current_digits_b.append(elem)
+                break
+        numbers_backwards.append(current_digits_b)
+        numbers_forward.append(current_digits_f)
     return sum([int(numbers_forward[i][0] + numbers_backwards[i][0])
                 for i in range(len(numbers_forward))])
