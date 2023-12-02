@@ -1,4 +1,6 @@
+import time
 
+start = time.time()
 def answer(file_path: str) -> int:
     to_digit_forward = {
         'one': '1',
@@ -41,11 +43,11 @@ def answer(file_path: str) -> int:
                 current_digits_f.append(elem)
                 break
         current_digits_b = []
-        buffer_b = []
+        buffer_b = ''
         for elem in line[::-1]:
-            buffer_b.append(elem)
+            buffer_b += elem
             for k, v in to_digit_backwards.items():
-                if k in ''.join(buffer_b):
+                if k in buffer_b:
                     current_digits_b.append(v)
                     break
             if elem.isdigit():
@@ -55,3 +57,7 @@ def answer(file_path: str) -> int:
         numbers_forward.append(current_digits_f)
     return sum([int(numbers_forward[i][0] + numbers_backwards[i][0])
                 for i in range(len(numbers_forward))])
+
+print(answer('input.txt'))
+
+print(time.time() - start)
