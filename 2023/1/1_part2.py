@@ -1,6 +1,4 @@
-import time
 
-start = time.time()
 def answer(file_path: str) -> int:
     to_digit_forward = {
         'one': '1',
@@ -57,7 +55,3 @@ def answer(file_path: str) -> int:
         numbers_forward.append(current_digits_f)
     return sum([int(numbers_forward[i][0] + numbers_backwards[i][0])
                 for i in range(len(numbers_forward))])
-
-print(answer('input.txt'))
-
-print(time.time() - start)
