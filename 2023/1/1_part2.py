@@ -1,5 +1,4 @@
 import re
-import time
 
 
 def answer(file_path: str) -> int:
