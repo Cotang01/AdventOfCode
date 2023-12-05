@@ -1,3 +1,6 @@
+import re
+import time
+
 
 def answer(file_path: str) -> int:
     to_digit_forward = {
@@ -55,3 +58,24 @@ def answer(file_path: str) -> int:
         numbers_forward.append(current_digits_f)
     return sum([int(numbers_forward[i][0] + numbers_backwards[i][0])
                 for i in range(len(numbers_forward))])
+
+
+# hyper-neutrino
+def answer_2(file_path: str) -> int:
+    with open(file_path) as file:
+        content = file.readlines()
+    num_words = ['one', 'two', 'three', 'four', 'five',
+                 'six', 'seven', 'eight', 'nine']
+    valid = '(?=(' + '|'.join(num_words) + '|\\d))'
+
+    def num_converter(n: str):
+        nonlocal num_words
+        if not n.isdigit():
+            return str(num_words.index(n) + 1)
+        return n
+
+    res = 0
+    for line in content:
+        digits = [*map(num_converter, re.findall(valid, line))]
+        res += int(digits[0] + digits[-1])
+    return res
